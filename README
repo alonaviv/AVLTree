@@ -1,0 +1,47 @@
+# Created for "Introduction to Object Oriented Programming"
+# in the Hebrew University.
+# Author: Alon Aviv
+# Date: May 2015
+
+
+=============================
+=  Program description  =
+=============================
+
+This program implements an AVL tree (self balancing binary search tree).
+Each tree node holds a single integer.
+
+=============================
+=      File description     =
+=============================
+
+AvlTree - Implements an AVL tree that adjusts itself as it adds, removes and
+searches for nodes within the tree.
+AvlNode - implements a single node within an AVL tree, holding an int as his key and 
+references to his parent and two children.
+    
+=============================
+=  Implementation details   =
+=============================
+
+ - The add() method adds the given node using a helper recursive method - addHelper().
+	This method goes to relevant location in the tree and adds the node.
+	If the node was added (no duplicates), the private method adjustTree() is called, which manages
+	tracking if the tree has any imbalances, and rotating the tree to fix it.
+	
+- The delete() method first locates the requested node using the helper function findNode() 
+  (Which is also used by contains()). It then calls the removeNode function which analyzes the 
+  state of the node and removes it according to the AVL algorithm. At the end, removeNode calls
+  the adjustTree() function in order to fix all the imbalances.
+  
+- The private adjustTree() function starts from the bottom of the tree and works its way up
+  recursively. For each node it calls updateHeight() to change the nodes height value if needed.
+  adjustTree() then calls which checks if the node's subtree is unbalanced according to the new heights.
+  If it is, it finds the imbalance scenario (RL/LR/RR/LL) and calls rotateByScenario(), giving it the
+  scenario as a string parameter. Finally, rotateByScenario() uses both rotateLeft() and rotateRight()
+  in order to execute the relevant rotations. 
+  
+ Note: There is a kind of code repetition in the sense that both addHelper and findNode traverse down
+ the tree to find a requested location. Though the former looks for an empty space for a new node, and the
+ second returns an existing requested node. Due to this difference I decided it would be too 
+ cumbersome to try and combine the two, and that using two seperate methods is more elegant.
